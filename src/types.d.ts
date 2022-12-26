@@ -3,12 +3,12 @@ export interface User {
     name: string;
     role:string;
     email:string;
-    in:boolean;
+    active:boolean;
 }
 
 export interface UserMutation{
     name:string;
     role:string;
     email:string;
-    in:boolean;
+    active:boolean;
 }

@@ -20,7 +20,7 @@ function App() {
       <main className="contsiner-fluid">
         <div className="row mt-2">
             <div className="col">
-              <UserForm  onSubmit={addUser}/>
+              <UserForm onSubmit={addUser}/>
             </div>
             <div className="col">
               <Users users={users}/>
