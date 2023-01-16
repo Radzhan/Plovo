@@ -1,35 +1,28 @@
-import React, { useState } from 'react';
-import NavBar from './components/NavBar/NavBar';
-import UserForm from './components/UserForm/UserForm';
-import Users from './components/Users/Users';
-import 'bootstrap/dist/css/bootstrap.min.css'
-import type {User} from "./types"
+import React from 'react';
+import {Route, Routes} from "react-router-dom";
+import Home from "./containers/Home/Home";
+import NewDish from "./containers/NewDish/NewDish";
+import Checkout from "./containers/Checkout/Checkout";
+import CustomerForm from "./containers/CustomerForm/CustomerForm";
+import EditDish from "./containers/EditDish/EditDish";
+import Orders from "./containers/Orders/Orders";
+import Layout from "./components/Layout/Layout";
 
 function App() {
-  const [users, setUsers] = useState<User[]>([])
-
-  const addUser = (newUser: User) => {
-    setUsers(prev => [...prev, newUser])
-  }
-
   return (
-    <>
-       <header>
-        <NavBar/>
-      </header>
-      <main className="contsiner-fluid">
-        <div className="row mt-2">
-            <div className="col">
-              <UserForm onSubmit={addUser}/>
-            </div>
-            <div className="col">
-              <Users users={users}/>
-            </div>
-        </div>
-      </main>
-
-    </>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/new-dish" element={<NewDish/>}/>
+        <Route path="/edit-dish/:id" element={<EditDish/>}/>
+        <Route path="/checkout" element={<Checkout/>}>
+          <Route path="continue" element={<CustomerForm/>}/>
+        </Route>
+        <Route path="/orders" element={<Orders/>}/>
+        <Route path="*" element={<h1>Not found!</h1>}/>
+      </Routes>
+    </Layout>
   );
-  }
+}
 
 export default App;
