@@ -7,6 +7,7 @@ const Orders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
 
+
   const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
@@ -20,6 +21,7 @@ const Orders = () => {
 
       const newOrders = Object.keys(orders).map(id => {
         const order = orders[id];
+
         const totalPrice = order.dishes.reduce((acc, cartDish) => {
           return acc + (cartDish.dish.price * cartDish.amount);
         }, 0);
@@ -40,6 +42,7 @@ const Orders = () => {
   useEffect(() => {
     void fetchOrders();
   }, [fetchOrders]);
+
 
   return (
     <div className="row mt-2">
