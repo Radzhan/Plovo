@@ -11,6 +11,7 @@ const CartDishes: React.FC<Props> = ({cartDishes}) => {
     return sum + cartDish.amount * cartDish.dish.price;
   }, 0);
 
+
   return (
     <>
       {cartDishes.map(cartDish => (

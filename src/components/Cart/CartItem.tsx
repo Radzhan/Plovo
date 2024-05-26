@@ -1,12 +1,19 @@
 import React from 'react';
 import {CartDish} from "../../types";
-
+import {useAppDispatch} from "../../app/hooks";
+import { minusDish } from '../../store/cartSlice';
 interface Props {
   cartDish: CartDish;
 }
 
 const CartItem: React.FC<Props> = ({cartDish}) => {
+  const dispatch = useAppDispatch();
+
   const price = cartDish.amount * cartDish.dish.price;
+
+  const removeFromCard = async () => {
+    await dispatch(minusDish(cartDish.dish))
+  };
 
   return (
     <div className="card mb-2 p-2">
@@ -15,6 +22,7 @@ const CartItem: React.FC<Props> = ({cartDish}) => {
         <div className="col-2">x{cartDish.amount}</div>
         <div className="col-3 text-right">
           {price} KGS
+        <button className="mx-1 btn btn-danger" onClick={removeFromCard}>X</button>
         </div>
       </div>
     </div>

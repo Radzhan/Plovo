@@ -25,6 +25,17 @@ export const cartSlice = createSlice({
         state.cartDishes.push({dish, amount: 1});
       }
     },
+    minusDish: (state, {payload: dish} : PayloadAction<Dish>) => {
+      const existingIndex = state.cartDishes.findIndex(item => {
+        return item.dish.id === dish.id;
+      });
+
+      if (state.cartDishes[existingIndex].amount > 1) {
+        state.cartDishes[existingIndex].amount--;
+      } else if (state.cartDishes[existingIndex].amount <= 1) {
+        state.cartDishes.splice(existingIndex, 1)
+      }
+    },
     resetCart: (state) => {
       state.cartDishes = [];
     },
@@ -51,6 +62,6 @@ export const cartSlice = createSlice({
 
 export const cartReducer = cartSlice.reducer;
 
-export const {addDish, resetCart, updateDishes} = cartSlice.actions;
+export const {addDish, resetCart, updateDishes, minusDish} = cartSlice.actions;
 
 export const selectCartDishes = (state: RootState) => state.cart.cartDishes;
