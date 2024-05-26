@@ -1,18 +1,22 @@
-import React from 'react';
-import {CartDish} from "../../types";
-import {useAppDispatch} from "../../app/hooks";
-import { minusDish } from '../../store/cartSlice';
+import React from "react";
+import { CartDish } from "../../types";
+import { useAppDispatch } from "../../app/hooks";
+import { minusDish } from "../../store/cartSlice";
+import { useLocation } from "react-router-dom";
 interface Props {
   cartDish: CartDish;
 }
 
-const CartItem: React.FC<Props> = ({cartDish}) => {
+const CartItem: React.FC<Props> = ({ cartDish }) => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  const isCheckoutPage = location.pathname === "/checkout";
 
   const price = cartDish.amount * cartDish.dish.price;
 
   const removeFromCard = async () => {
-    await dispatch(minusDish(cartDish.dish))
+    await dispatch(minusDish(cartDish.dish));
   };
 
   return (
@@ -22,7 +26,11 @@ const CartItem: React.FC<Props> = ({cartDish}) => {
         <div className="col-2">x{cartDish.amount}</div>
         <div className="col-3 text-right">
           {price} KGS
-        <button className="mx-1 btn btn-danger" onClick={removeFromCard}>X</button>
+          {isCheckoutPage ? null : (
+            <button className="mx-1 btn btn-danger" onClick={removeFromCard}>
+              X
+            </button>
+          )}
         </div>
       </div>
     </div>
