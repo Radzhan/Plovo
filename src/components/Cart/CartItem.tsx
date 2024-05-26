@@ -11,7 +11,7 @@ const CartItem: React.FC<Props> = ({ cartDish }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
-  const isCheckoutPage = location.pathname === "/checkout";
+  const isCheckoutPage = location.pathname === "/checkout" || location.pathname === '/checkout/continue';
 
   const price = cartDish.amount * cartDish.dish.price;
 
