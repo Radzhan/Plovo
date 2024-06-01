@@ -53,7 +53,6 @@ const Orders = () => {
             {orders.map(order => (
               <div key={order.id} className="card mb-2">
                 <div className="card-body">
-                  <strong>{order.customer.name}</strong>
                   <span> ordered for a total price of </span>
                   <strong>{order.totalPrice} KGS</strong>
                 </div>

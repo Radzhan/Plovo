@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import CartItem from "./CartItem";
-import {CartDish} from "../../types";
+import { CartDish } from "../../types";
 
 interface Props {
   cartDishes: CartDish[];
 }
 
-const CartDishes: React.FC<Props> = ({cartDishes}) => {
+const CartDishes = forwardRef<HTMLDivElement, Props>(({ cartDishes }, ref) => {
   const total = cartDishes.reduce((sum, cartDish) => {
     return sum + cartDish.amount * cartDish.dish.price;
   }, 0);
 
-
   return (
-    <>
+    <div className="ticket" ref={ref}>
       {cartDishes.map(cartDish => (
-        <CartItem
-          key={cartDish.dish.id}
-          cartDish={cartDish}
-        />
+        <CartItem key={cartDish.dish.id} cartDish={cartDish} />
       ))}
       <div className="card border-0 p-2">
         <div className="row">
@@ -30,8 +26,8 @@ const CartDishes: React.FC<Props> = ({cartDishes}) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-};
+});
 
 export default CartDishes;

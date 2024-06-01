@@ -5,7 +5,7 @@ import Cart from "../../components/Cart/Cart";
 const Home: React.FC = () => {
   return (
     <div className="row mt-2">
-      <div className="col-7">
+      <div className="col-5 mr-auto">
         <Dishes/>
       </div>
       <div className="col-5">

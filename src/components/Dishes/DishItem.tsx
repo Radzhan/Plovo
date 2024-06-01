@@ -16,7 +16,9 @@ const DishItem: React.FC<Props> = ({dish, onDelete, deleteLoading}) => {
   const imageUrl = 'https://cdn.momsdish.com/wp-content/uploads/2021/06/Uzbek-Plov-Recipe-05-600x900.jpg';
   const image = dish.image || imageUrl;
   const imageStyle = {
-    background: `url(${image}) no-repeat center center / cover`
+    background: `url(${image}) no-repeat center center / cover`,
+    maxWidth: '150px',
+
   };
 
   const addToCart = () => {
