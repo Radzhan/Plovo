@@ -19,6 +19,11 @@ export interface DishMutation {
   price: string;
 }
 
+export interface CartToApi {
+  payMode: "Картой" | "Наличными";
+  CartDish: CartDish[];
+}
+
 export interface CartDish {
   dish: Dish;
   amount: number;
@@ -26,6 +31,7 @@ export interface CartDish {
 
 export interface ApiOrder {
   dishes: CartDish[];
+  payMode: "Картой" | "Наличными";
 }
 
 export interface ApiOrdersList {

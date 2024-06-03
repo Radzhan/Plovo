@@ -9,7 +9,7 @@ declare module 'js-html2pdf' {
   
     class Html2Pdf {
       constructor(element: HTMLElement, options: Html2PdfOptions);
-      getPdf: (arg: Html2PdfOptions) => Promise<void>;
+      getPdf: (arg: Html2PdfOptions) => Blob;
     }
   
     export default Html2Pdf;

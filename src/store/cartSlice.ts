@@ -1,13 +1,16 @@
-import {CartDish, Dish} from "../types";
+import {CartDish, CartToApi, Dish} from "../types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../app/store";
 
 interface CartState {
-  cartDishes: CartDish[];
+  cartDishes: CartToApi;
 }
 
 const initialState: CartState = {
-  cartDishes: [],
+  cartDishes: {
+    CartDish: [],
+    payMode: 'Картой'
+  },
 }
 
 export const cartSlice = createSlice({
@@ -15,34 +18,34 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addDish: (state, {payload: dish}: PayloadAction<Dish>) => {
-      const existingIndex = state.cartDishes.findIndex(item => {
+      const existingIndex = state.cartDishes.CartDish.findIndex(item => {
         return item.dish.id === dish.id;
       });
 
       if (existingIndex !== -1) {
-        state.cartDishes[existingIndex].amount++;
+        state.cartDishes.CartDish[existingIndex].amount++;
       } else {
-        state.cartDishes.push({dish, amount: 1});
+        state.cartDishes.CartDish.push({dish, amount: 1});
       }
     },
     minusDish: (state, {payload: dish} : PayloadAction<Dish>) => {
-      const existingIndex = state.cartDishes.findIndex(item => {
+      const existingIndex = state.cartDishes.CartDish.findIndex(item => {
         return item.dish.id === dish.id;
       });
 
-      if (state.cartDishes[existingIndex].amount > 1) {
-        state.cartDishes[existingIndex].amount--;
-      } else if (state.cartDishes[existingIndex].amount <= 1) {
-        state.cartDishes.splice(existingIndex, 1)
+      if (state.cartDishes.CartDish[existingIndex].amount > 1) {
+        state.cartDishes.CartDish[existingIndex].amount--;
+      } else if (state.cartDishes.CartDish[existingIndex].amount <= 1) {
+        state.cartDishes.CartDish.splice(existingIndex, 1)
       }
     },
     resetCart: (state) => {
-      state.cartDishes = [];
+      state.cartDishes.CartDish = [];
     },
     updateDishes: (state, {payload: dishes}: PayloadAction<Dish[]>) => {
       const newCartDishes: CartDish[] = [];
 
-      state.cartDishes.forEach(cartDish => {
+      state.cartDishes.CartDish.forEach(cartDish => {
         const existingDish = dishes.find(dish => dish.id === cartDish.dish.id);
 
         if (!existingDish) {
@@ -55,7 +58,7 @@ export const cartSlice = createSlice({
         });
       });
 
-      state.cartDishes = newCartDishes;
+      state.cartDishes.CartDish = newCartDishes;
     }
   }
 });

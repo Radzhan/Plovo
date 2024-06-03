@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef } from "react";
 import CartItem from "./CartItem";
 import { CartDish } from "../../types";
 
@@ -13,14 +13,12 @@ const CartDishes = forwardRef<HTMLDivElement, Props>(({ cartDishes }, ref) => {
 
   return (
     <div className="ticket" ref={ref}>
-      {cartDishes.map(cartDish => (
+      {cartDishes.map((cartDish) => (
         <CartItem key={cartDish.dish.id} cartDish={cartDish} />
       ))}
       <div className="card border-0 p-2">
         <div className="row">
-          <div className="col text-right">
-            Total:
-          </div>
+          <div className="col text-right">Total:</div>
           <div className="col-3 text-right">
             <strong>{total}</strong> KGS
           </div>

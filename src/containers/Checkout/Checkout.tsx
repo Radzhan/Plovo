@@ -6,32 +6,45 @@ import { ApiOrder } from "../../types";
 import axiosApi from "../../axiosApi";
 import CartDishes from "../../components/Cart/CartDishes";
 import Spinner from "../../components/Spinner/Spinner";
-import { useReactToPrint } from "react-to-print";
-import Html2Pdf from 'js-html2pdf';
-import { saveRequest } from "../../app/utils/localStorageUtil";
+import Html2Pdf from "js-html2pdf";
 import useSyncOfflineRequests from "../../app/hooks/useSyncOfflineRequest";
+import { saveRequest } from "../../app/utils/localStorageUtil";
 
 const Checkout: React.FC = () => {
-  useSyncOfflineRequests()
+  useSyncOfflineRequests();
   const componentRef = useRef<HTMLDivElement>(null);
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-    onPrintError: (error) => console.log(error),
-    print: async (printIframe) => {
-      const document = printIframe?.contentDocument;
-      if (document) {
-        const ticketElement = document.getElementsByClassName("ticket")[0] as HTMLElement;
-        ticketElement.style.display = "block";
-        const options = {
-          margin: 0,
-          filename: "ticket.pdf",
-          jsPDF: { unit: "px", format: [600, 800], orientation: "portrait" },
-        };
-        const exporter = new Html2Pdf(ticketElement, options);
-        await exporter.getPdf(options);
-      }
-    },
-  });
+  const [payM, setPayM] = useState<'Картой' | 'Наличными'>('Картой');
+  const handlePrint = async () => {
+    const ticketElement = componentRef.current?.querySelector(
+      ".ticket"
+    ) as HTMLElement;
+    if (ticketElement) {
+      const options = {
+        margin: 0,
+        filename: "ticket.pdf",
+        jsPDF: { unit: "px", format: [800, 800], orientation: "portrait" },
+      };
+
+      const exporter = new Html2Pdf(ticketElement, options);
+      const pdfBlob = (await exporter.getPdf(options)) as Blob;
+
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "fixed";
+      iframe.style.width = "0px";
+      iframe.style.height = "0px";
+      iframe.style.border = "none";
+      document.body.appendChild(iframe);
+
+      iframe.src = pdfUrl;
+      iframe.onload = () => {
+        iframe.contentWindow?.print();
+        URL.revokeObjectURL(pdfUrl);
+      };
+    }
+  };
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const cartDishes = useAppSelector(selectCartDishes);
@@ -39,10 +52,11 @@ const Checkout: React.FC = () => {
 
   const submitOrder = async () => {
     setLoading(true);
-    handlePrint();
+    await handlePrint();
 
     const order: ApiOrder = {
-      dishes: cartDishes,
+      dishes: cartDishes.CartDish,
+      payMode: payM,
     };
 
     try {
@@ -60,7 +74,7 @@ const Checkout: React.FC = () => {
     }
   };
 
-  if (cartDishes.length === 0) {
+  if (cartDishes.CartDish.length === 0) {
     return <Navigate to="/" />;
   }
 
@@ -68,14 +82,27 @@ const Checkout: React.FC = () => {
     <>
       {!loading ? (
         <div className="row mt-2">
-          <div className="col-4 m-auto">
+          <div className="m-auto" style={{ maxWidth: "800px" }}>
             <h4>Checkout</h4>
-            <CartDishes cartDishes={cartDishes} ref={componentRef} />
+            <CartDishes cartDishes={cartDishes.CartDish} ref={componentRef} />
             <div className="d-flex gap-2">
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                value={payM}
+                onChange={(e) => setPayM(e.target.value as 'Картой' | 'Наличными')}
+              >
+                <option value="Картой">Картой</option>
+                <option value="Наличными">Наличными</option>
+              </select>
               <Link to="/" className="btn btn-danger">
                 Cancel
               </Link>
-              <NavLink to="/orders" onClick={submitOrder} className="btn btn-primary">
+              <NavLink
+                to="/orders"
+                onClick={submitOrder}
+                className="btn btn-primary"
+              >
                 Continue
               </NavLink>
             </div>

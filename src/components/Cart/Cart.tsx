@@ -17,10 +17,10 @@ const Cart: React.FC = () => {
   );
   const cancel = () => setShowModal(prev => !prev);
 
-  if (cartDishes.length > 0) {
+  if (cartDishes.CartDish.length > 0) {
     cart = (
       <>
-        <CartDishes cartDishes={cartDishes}/>
+        <CartDishes cartDishes={cartDishes.CartDish}/>
         <button
           className="w-100 btn btn-primary"
           onClick={cancel}
