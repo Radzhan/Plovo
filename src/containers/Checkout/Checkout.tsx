@@ -9,41 +9,15 @@ import Spinner from "../../components/Spinner/Spinner";
 import Html2Pdf from "js-html2pdf";
 import useSyncOfflineRequests from "../../app/hooks/useSyncOfflineRequest";
 import { saveRequest } from "../../app/utils/localStorageUtil";
+import { useReactToPrint } from "react-to-print";
 
 const Checkout: React.FC = () => {
   useSyncOfflineRequests();
   const componentRef = useRef<HTMLDivElement>(null);
-  const [payM, setPayM] = useState<'Картой' | 'Наличными'>('Картой');
-  const handlePrint = async () => {
-    const ticketElement = componentRef.current?.querySelector(
-      ".ticket"
-    ) as HTMLElement;
-    if (ticketElement) {
-      const options = {
-        margin: 0,
-        filename: "ticket.pdf",
-        jsPDF: { unit: "px", format: [800, 800], orientation: "portrait" },
-      };
-
-      const exporter = new Html2Pdf(ticketElement, options);
-      const pdfBlob = (await exporter.getPdf(options)) as Blob;
-
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-
-      const iframe = document.createElement("iframe");
-      iframe.style.position = "fixed";
-      iframe.style.width = "0px";
-      iframe.style.height = "0px";
-      iframe.style.border = "none";
-      document.body.appendChild(iframe);
-
-      iframe.src = pdfUrl;
-      iframe.onload = () => {
-        iframe.contentWindow?.print();
-        URL.revokeObjectURL(pdfUrl);
-      };
-    }
-  };
+  const [payM, setPayM] = useState<"Картой" | "Наличными">("Картой");
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -82,19 +56,26 @@ const Checkout: React.FC = () => {
     <>
       {!loading ? (
         <div className="row mt-2">
-          <div className="m-auto" style={{ maxWidth: "800px" }}>
+          <div className="m-auto" style={{ maxWidth: "700px" }}>
             <h4>Checkout</h4>
-            <CartDishes cartDishes={cartDishes.CartDish} ref={componentRef} />
+            <div className="mb-4" ref={componentRef}>
+              <CartDishes cartDishes={cartDishes.CartDish} />
+              <div className="d-flex align-items-center">
+                <b className="col-9">Тип оплаты: </b>
+                <select
+                  className="form-select mt-1 border-none"
+                  aria-label="Default select example"
+                  value={payM}
+                  onChange={(e) =>
+                    setPayM(e.target.value as "Картой" | "Наличными")
+                  }
+                >
+                  <option value="Картой">Картой</option>
+                  <option value="Наличными">Наличными</option>
+                </select>
+              </div>
+            </div>
             <div className="d-flex gap-2">
-              <select
-                className="form-select"
-                aria-label="Default select example"
-                value={payM}
-                onChange={(e) => setPayM(e.target.value as 'Картой' | 'Наличными')}
-              >
-                <option value="Картой">Картой</option>
-                <option value="Наличными">Наличными</option>
-              </select>
               <Link to="/" className="btn btn-danger">
                 Cancel
               </Link>
