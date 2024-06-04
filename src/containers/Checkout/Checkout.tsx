@@ -31,7 +31,6 @@ const Checkout: React.FC = () => {
 
   const updateLocalStorage = (number: number) => {
     localStorage.setItem("checkNumber", number.toString());
-    console.log(`Updated checkNumber in localStorage: ${number}`);
   };
 
   useEffect(() => {
@@ -61,11 +60,15 @@ const Checkout: React.FC = () => {
       await handlePrint();
       navigate("/");
     } catch (e) {
+      incrementCheckNumber();
       const offlineRequest = {
         id: Date.now().toString(),
         data: order,
       };
       saveRequest(offlineRequest);
+      await handlePrint();
+      dispatch(resetCart());
+      navigate("/");
     } finally {
       setLoading(false);
     }
@@ -112,7 +115,6 @@ const Checkout: React.FC = () => {
         <Spinner />
       )}
 
-      {/* Скрытые блоки для печати */}
       <div style={{ display: "none" }}>
         <div ref={printRef}>
           <Receipt
