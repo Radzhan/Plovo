@@ -18,7 +18,7 @@ const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const cartDishes = useAppSelector(selectCartDishes);
   const [loading, setLoading] = useState(false);
-  const [payM, setPayM] = useState<"Картой" | "Наличными">("Картой");
+  const [payM, setPayM] = useState<"Картой" | "Наличными">("Наличными");
 
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
@@ -29,12 +29,21 @@ const Checkout: React.FC = () => {
     return savedCheckNumber ? parseInt(savedCheckNumber, 10) : 1;
   });
 
+  const updateLocalStorage = (number: number) => {
+    localStorage.setItem("checkNumber", number.toString());
+    console.log(`Updated checkNumber in localStorage: ${number}`);
+  };
+
   useEffect(() => {
-    localStorage.setItem("checkNumber", checkNumber.toString());
+    updateLocalStorage(checkNumber);
   }, [checkNumber]);
 
   const incrementCheckNumber = () => {
-    setCheckNumber((prevNumber) => (prevNumber >= 100 ? 1 : prevNumber + 1));
+    setCheckNumber((prevNumber) => {
+      const newNumber = prevNumber >= 100 ? 1 : prevNumber + 1;
+      updateLocalStorage(newNumber);
+      return newNumber;
+    });
   };
 
   const submitOrder = async () => {
@@ -46,9 +55,9 @@ const Checkout: React.FC = () => {
     };
 
     try {
+      incrementCheckNumber();
       await axiosApi.post("/orders.json", order);
       dispatch(resetCart());
-      incrementCheckNumber();
       await handlePrint();
       navigate("/");
     } catch (e) {
@@ -93,10 +102,7 @@ const Checkout: React.FC = () => {
               <Link to="/" className="btn btn-danger">
                 Cancel
               </Link>
-              <button
-                onClick={submitOrder}
-                className="btn btn-primary"
-              >
+              <button onClick={submitOrder} className="btn btn-primary">
                 Continue
               </button>
             </div>
@@ -106,9 +112,14 @@ const Checkout: React.FC = () => {
         <Spinner />
       )}
 
-      {/* Скрытый блок для печати */}
+      {/* Скрытые блоки для печати */}
       <div style={{ display: "none" }}>
         <div ref={printRef}>
+          <Receipt
+            checkNumber={checkNumber}
+            payMode={payM}
+            cartDishes={cartDishes.CartDish}
+          />
           <Receipt
             checkNumber={checkNumber}
             payMode={payM}

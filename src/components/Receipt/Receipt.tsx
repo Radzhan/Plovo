@@ -1,5 +1,5 @@
-import { CartDish } from '../../types';
-import './Receipt.css'
+import { CartDish } from "../../types";
+import "./Receipt.css";
 
 interface ReceiptProps {
   checkNumber: number;
@@ -20,20 +20,28 @@ const Receipt: React.FC<ReceiptProps> = ({
 
   return (
     <div className="receipt">
-      <h2>Дон Кебаб</h2>
-      <p>Номер чека: {checkNumber}</p>
-      <p>Дата: {currentDate}</p>
+      <h2 className="mb-2">Дон Кебаб</h2>
+      <p className="info-check">Номер чека: {checkNumber}</p>
+      <p className="info-check">Дата: {currentDate}</p>
       <ul>
         {cartDishes.map((dish) => (
           <li key={dish.dish.id}>
-            {dish.dish.name} x {dish.amount} - {dish.dish.price * dish.amount} руб.
+            <span>{dish.dish.name}</span>{" "}
+            <div className="price-receipt">
+              <p className="amount">x {dish.amount}</p>
+              <p>- {dish.dish.price * dish.amount} сом.</p>
+            </div>
           </li>
         ))}
       </ul>
-      <p>Сумма: {totalAmount} руб.</p>
+      <p className="sum">
+        <span>Сумма:</span> <b>{totalAmount} сом.</b> 
+      </p>
       <b>Оплата:</b>
-      <span>{payMode}</span>
-      <span>{totalAmount} руб.</span>
+      <div className="payM">
+        <span>{payMode}</span>
+        <span>{totalAmount} сом.</span>
+      </div>
     </div>
   );
 };
