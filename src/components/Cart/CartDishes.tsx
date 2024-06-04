@@ -19,7 +19,7 @@ const CartDishes = forwardRef<HTMLDivElement, Props>(({ cartDishes }) => {
       <div className="card border-0 p-2">
         <div className="row">
           <div className="col p-1 text-right">Total:</div>
-          <div className="col-2 text-right">
+          <div className="col-3 text-right">
             <strong>{total}</strong> KGS
           </div>
         </div>

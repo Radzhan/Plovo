@@ -1,0 +1,24 @@
+
+@media print {
+  .printable {
+    width: 300px; /* Пример изменения ширины */
+    font-size: 12px; /* Пример изменения шрифта */
+    /* Добавьте другие стили по необходимости */
+  }
+
+  /* Скрываем весь остальной контент */
+  body * {
+    visibility: hidden;
+  }
+
+  .printable,
+  .printable * {
+    visibility: visible;
+  }
+
+  .printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
