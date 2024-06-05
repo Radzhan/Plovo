@@ -12,7 +12,7 @@ const Cart: React.FC = () => {
 
   let cart = (
     <div className="alert alert-primary">
-      Cart is empty! Add something!
+      Корзина пуста ! Добавьте что-то !
     </div>
   );
   const cancel = () => setShowModal(prev => !prev);
@@ -25,7 +25,7 @@ const Cart: React.FC = () => {
           className="w-100 btn btn-primary"
           onClick={cancel}
         >
-          Order
+          Заказать
         </button>
       </>
     );
@@ -33,24 +33,24 @@ const Cart: React.FC = () => {
 
   return (
     <>
-      <h4>Cart</h4>
+      <h4>Корзина</h4>
       {cart}
-      <Modal show={showModal} title="Order" onClose={cancel}>
+      <Modal show={showModal} title="Заказ" onClose={cancel}>
         <div className="modal-body">
-          <p>Do you want to continue to checkout?</p>
+          <p>Перейти на страницу заказа ?</p>
         </div>
         <div className="modal-footer">
           <button
             className="btn btn-danger"
             onClick={cancel}
           >
-            Cancel
+            Отмена
           </button>
           <button
             className="btn btn-primary"
             onClick={() => navigate('/checkout')}
           >
-            Continue
+            Продолжить
           </button>
         </div>
       </Modal>

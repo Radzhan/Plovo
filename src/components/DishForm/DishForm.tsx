@@ -42,9 +42,9 @@ const DishForm: React.FC<Props> = ({
 
   return (
     <form onSubmit={onFormSubmit}>
-      <h4>{isEdit ? "Edit dish" : "Add new dish"}</h4>
+      <h4>{isEdit ? "Редактировать блюдо" : "Создать блюдо"}</h4>
       <div className="form-group">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Имя</label>
         <input
           id="name"
           name="name"
@@ -55,7 +55,7 @@ const DishForm: React.FC<Props> = ({
         />
       </div>
       <div className="form-group">
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Описание</label>
         <textarea
           id="description"
           name="description"
@@ -65,7 +65,7 @@ const DishForm: React.FC<Props> = ({
         />
       </div>
       <div className="form-group">
-        <label htmlFor="image">Image</label>
+        <label htmlFor="image">Фото</label>
         <input
           id="image"
           name="image"
@@ -76,7 +76,7 @@ const DishForm: React.FC<Props> = ({
         />
       </div>
       <div className="form-group mb-2">
-        <label htmlFor="price">Price</label>
+        <label htmlFor="price">Цена</label>
         <input
           id="price"
           name="price"
@@ -88,7 +88,7 @@ const DishForm: React.FC<Props> = ({
       </div>
       <button type="submit" disabled={isLoading} className="btn btn-primary">
         {isLoading && <ButtonSpinner />}
-        {isEdit ? "Update" : "Create"}
+        {isEdit ? "Обновить" : "Создать"}
       </button>
     </form>
   );

@@ -8,6 +8,7 @@ interface CartState {
 
 const initialState: CartState = {
   cartDishes: {
+    date: '',
     CartDish: [],
     payMode: 'Картой'
   },

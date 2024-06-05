@@ -25,7 +25,7 @@ const CartItem: React.FC<Props> = ({ cartDish }) => {
         <div className="col">{cartDish.dish.name}</div>
         <div className="col-2">x{cartDish.amount}</div>
         <div className="col-3 text-right">
-          {price} KGS
+          {price} сом
           {isCheckoutPage ? null : (
             <button className="mx-3 btn btn-danger" style={{padding: '0 5px'}} onClick={removeFromCard}>
               X

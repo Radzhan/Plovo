@@ -18,9 +18,9 @@ const CartDishes = forwardRef<HTMLDivElement, Props>(({ cartDishes }) => {
       ))}
       <div className="card border-0 p-2">
         <div className="row">
-          <div className="col p-1 text-right">Total:</div>
+          <div className="col p-1 text-right">Итого:</div>
           <div className="col-3 text-right">
-            <strong>{total}</strong> KGS
+            <strong>{total}</strong> сом
           </div>
         </div>
       </div>

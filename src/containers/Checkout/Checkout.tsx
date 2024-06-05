@@ -49,6 +49,7 @@ const Checkout: React.FC = () => {
     setLoading(true);
 
     const order: ApiOrder = {
+      date: new Date().toLocaleString(),
       dishes: cartDishes.CartDish,
       payMode: payM,
     };
@@ -83,7 +84,7 @@ const Checkout: React.FC = () => {
       {!loading ? (
         <div className="row mt-2">
           <div className="col-5 m-auto">
-            <h4>Checkout</h4>
+            <h4>Заказ</h4>
             <div className="mb-4">
               <CartDishes cartDishes={cartDishes.CartDish} />
               <div className="d-flex align-items-center">
@@ -103,10 +104,10 @@ const Checkout: React.FC = () => {
             </div>
             <div className="d-flex gap-2">
               <Link to="/" className="btn btn-danger">
-                Cancel
+                Отмена
               </Link>
               <button onClick={submitOrder} className="btn btn-primary">
-                Continue
+                Продолжить
               </button>
             </div>
           </div>

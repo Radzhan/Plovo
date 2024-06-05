@@ -10,17 +10,17 @@ const Navbar: React.FC = () => {
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
               <NavLink to="/" className="nav-link">
-                Home
+                Главная
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink to="/new-dish" className="nav-link">
-                New Dish
+                Новое блюдо
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink to="/orders" className="nav-link">
-                Orders
+                Заказы
               </NavLink>
             </li>
           </ul>

@@ -22,6 +22,7 @@ export interface DishMutation {
 export interface CartToApi {
   payMode: "Картой" | "Наличными";
   CartDish: CartDish[];
+  date: string;
 }
 
 export interface CartDish {
@@ -32,13 +33,17 @@ export interface CartDish {
 export interface ApiOrder {
   dishes: CartDish[];
   payMode: "Картой" | "Наличными";
+  date: string;
 }
 
 export interface ApiOrdersList {
   [id: string]: ApiOrder;
 }
 
-export interface Order extends ApiOrder {
+export interface Order {
   id: string;
   totalPrice: number;
+  dishes: CartDish[];
+  payMode: "Картой" | "Наличными";
+  date: Date; // Меняем тип на Date
 }

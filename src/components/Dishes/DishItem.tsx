@@ -33,17 +33,17 @@ const DishItem: React.FC<Props> = ({dish, onDelete, deleteLoading}) => {
           <div className="card-body">
             <h5 className="card-title">{dish.name}</h5>
             <p className="card-text small">{dish.description}</p>
-            <p className="card-text">{dish.price} KGS</p>
+            <p className="card-text">{dish.price} сом</p>
             <p className="d-flex gap-2">
-              <button className="btn btn-success" onClick={addToCart}>Add</button>
-              <Link className="btn btn-primary" to={`/edit-dish/${dish.id}`}>Edit</Link>
+              <button className="btn btn-success" onClick={addToCart}>Добавить</button>
+              <Link className="btn btn-primary" to={`/edit-dish/${dish.id}`}>Редактировать</Link>
               <button
                 className="btn btn-danger"
                 onClick={onDelete}
                 disabled={deleteLoading ? deleteLoading === dish.id : false}
               >
                 {deleteLoading && deleteLoading === dish.id && <ButtonSpinner/>}
-                Delete
+                Удалить
               </button>
             </p>
           </div>

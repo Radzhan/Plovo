@@ -24,7 +24,7 @@ const Dishes: React.FC = () => {
 
   return (
     <>
-      <h4>Dishes</h4>
+      <h4>Блюда</h4>
       {fetchLoading ? <Spinner/> : dishes.map((dish) => (
         <DishItem
           key={dish.id}
