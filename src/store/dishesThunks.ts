@@ -1,55 +1,77 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ApiDish, ApiDishesList, Dish} from "../types";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ApiDish, ApiDishesList, ApiOrdersList, Dish } from "../types";
 import axiosApi from "../axiosApi";
-import {AppDispatch} from "../app/store";
-import {updateDishes} from "./cartSlice";
+import { AppDispatch } from "../app/store";
+import { updateDishes } from "./cartSlice";
 
-export const fetchDishes = createAsyncThunk<Dish[], undefined, {dispatch: AppDispatch}>(
-  'dishes/fetchAll',
-  async (_, thunkAPI) => {
-    const dishesResponse = await axiosApi.get<ApiDishesList | null>('/dishes.json');
-    const dishes = dishesResponse.data;
+export const fetchDishes = createAsyncThunk<
+  Dish[],
+  undefined,
+  { dispatch: AppDispatch }
+>("dishes/fetchAll", async (_, thunkAPI) => {
+  const dishesResponse = await axiosApi.get<ApiDishesList | null>(
+    "/dishes.json"
+  );
+  const dishes = dishesResponse.data;
 
-    let newDishes: Dish[] = [];
+  let newDishes: Dish[] = [];
 
-    if (dishes) {
-      newDishes = Object.keys(dishes).map(id => {
-        const dish = dishes[id];
-        return {
-          ...dish,
-          id
-        }
-      });
-    }
+  if (dishes) {
+    newDishes = Object.keys(dishes).map((id) => {
+      const dish = dishes[id];
+      return {
+        ...dish,
+        id,
+      };
+    });
+  }
 
-    thunkAPI.dispatch(updateDishes(newDishes));
+  thunkAPI.dispatch(updateDishes(newDishes));
 
-    return newDishes;
+  return newDishes;
+});
+
+export const fetchOrders = createAsyncThunk<ApiOrdersList, undefined>(
+  "orders/fetchAllOrders",
+  async () => {
+    const ordersResponse = await axiosApi.get<ApiOrdersList | null>(
+      "/orders.json"
+    );
+    return ordersResponse.data ? ordersResponse.data : {};
   }
 );
 
 export const deleteDish = createAsyncThunk<void, string>(
-  'dishes/delete',
+  "dishes/delete",
   async (dishId) => {
-    await axiosApi.delete('/dishes/' + dishId + '.json');
+    await axiosApi.delete("/dishes/" + dishId + ".json");
+  }
+);
+
+export const deleteOrder = createAsyncThunk<void, string>(
+  "dishes/deleteOrder",
+  async (orderId) => {
+    await axiosApi.delete("/orders/" + orderId + ".json");
   }
 );
 
 export const createDish = createAsyncThunk<void, ApiDish>(
-  'dishes/create',
+  "dishes/create",
   async (apiDish) => {
-    await axiosApi.post('/dishes.json', apiDish);
+    await axiosApi.post("/dishes.json", apiDish);
   }
 );
 
 export const fetchDish = createAsyncThunk<ApiDish, string>(
-  'dishes/fetchOne',
+  "dishes/fetchOne",
   async (id) => {
-    const response = await axiosApi.get<ApiDish | null>('/dishes/' + id + '.json');
+    const response = await axiosApi.get<ApiDish | null>(
+      "/dishes/" + id + ".json"
+    );
     const dish = response.data;
 
     if (dish === null) {
-      throw new Error('Not Found!');
+      throw new Error("Not Found!");
     }
 
     return dish;
@@ -62,8 +84,8 @@ interface UpdateDishParams {
 }
 
 export const updateDish = createAsyncThunk<void, UpdateDishParams>(
-  'dishes/update',
+  "dishes/update",
   async (params) => {
-    await axiosApi.put('/dishes/' + params.id + '.json', params.dish);
+    await axiosApi.put("/dishes/" + params.id + ".json", params.dish);
   }
 );

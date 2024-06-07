@@ -25,7 +25,7 @@ const Cart: React.FC = () => {
           className="w-100 btn btn-primary"
           onClick={cancel}
         >
-          Заказать
+          Оплатить
         </button>
       </>
     );
@@ -33,7 +33,7 @@ const Cart: React.FC = () => {
 
   return (
     <>
-      <h4>Корзина</h4>
+      <h4>Чек</h4>
       {cart}
       <Modal show={showModal} title="Заказ" onClose={cancel}>
         <div className="modal-body">

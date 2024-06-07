@@ -11,7 +11,6 @@ interface Props {
 
 const initialState: DishMutation = {
   name: "",
-  description: "",
   image: "",
   price: "",
 };
@@ -51,16 +50,6 @@ const DishForm: React.FC<Props> = ({
           type="text"
           className="form-control"
           value={dish.name}
-          onChange={onDishChange}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="description">Описание</label>
-        <textarea
-          id="description"
-          name="description"
-          className="form-control"
-          value={dish.description}
           onChange={onDishChange}
         />
       </div>

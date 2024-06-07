@@ -1,9 +1,10 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
+import styles from './NavBar.module.css';
 
 const Navbar: React.FC = () => {
   return (
-    <div className="navbar navbar-expand-sm navbar-dark bg-primary">
+    <div className={`${ styles.nav } navbar navbar-expand-sm navbar-dark bg-primary`}>
       <div className="container-fluid">
         <span className="navbar-brand">Plovo</span>
         <div className="collapse navbar-collapse">
@@ -20,7 +21,7 @@ const Navbar: React.FC = () => {
             </li>
             <li className="nav-item">
               <NavLink to="/orders" className="nav-link">
-                Заказы
+                Архив чеков
               </NavLink>
             </li>
           </ul>

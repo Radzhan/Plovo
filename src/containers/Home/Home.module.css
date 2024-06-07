@@ -1,0 +1,13 @@
+.home {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.dishesBox {
+  width: 64%;
+}
+
+.cardBox {
+  width: 33%;
+}

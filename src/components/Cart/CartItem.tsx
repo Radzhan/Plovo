@@ -3,6 +3,7 @@ import { CartDish } from "../../types";
 import { useAppDispatch } from "../../app/hooks";
 import { minusDish } from "../../store/cartSlice";
 import { useLocation } from "react-router-dom";
+import styles from "./CartItem.module.css";
 interface Props {
   cartDish: CartDish;
 }
@@ -11,7 +12,9 @@ const CartItem: React.FC<Props> = ({ cartDish }) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
-  const isCheckoutPage = location.pathname === "/checkout" || location.pathname === '/checkout/continue';
+  const isCheckoutPage =
+    location.pathname === "/checkout" ||
+    location.pathname === "/checkout/continue";
 
   const price = cartDish.amount * cartDish.dish.price;
 
@@ -20,18 +23,19 @@ const CartItem: React.FC<Props> = ({ cartDish }) => {
   };
 
   return (
-    <div className="card mb-2 p-2">
-      <div className="row align-items-center">
-        <div className="col">{cartDish.dish.name}</div>
-        <div className="col-2">x{cartDish.amount}</div>
-        <div className="col-3 text-right">
-          {price} сом
-          {isCheckoutPage ? null : (
-            <button className="mx-3 btn btn-danger" style={{padding: '0 5px'}} onClick={removeFromCard}>
-              X
-            </button>
-          )}
-        </div>
+    <div className={styles.dishesBlock}>
+      <p className={styles.dishName}>{cartDish.dish.name}</p>
+      <p className={styles.dishesAmount}>x{cartDish.amount}</p>
+      <div className={styles.priceBlock}>
+        <p>{price} сом</p>
+        {isCheckoutPage ? null : (
+          <button
+            className=""
+            onClick={removeFromCard}
+          >
+            X
+          </button>
+        )}
       </div>
     </div>
   );

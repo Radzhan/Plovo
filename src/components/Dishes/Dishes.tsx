@@ -1,9 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from "react";
 import DishItem from "./DishItem";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {selectDishDeleteLoading, selectDishes, selectDishesFetchLoading} from "../../store/dishesSlice";
-import {deleteDish, fetchDishes} from "../../store/dishesThunks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  selectDishDeleteLoading,
+  selectDishes,
+  selectDishesFetchLoading,
+} from "../../store/dishesSlice";
+import { deleteDish, fetchDishes } from "../../store/dishesThunks";
 import Spinner from "../Spinner/Spinner";
+import styles from './Dishes.module.css';
 
 const Dishes: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +21,7 @@ const Dishes: React.FC = () => {
   }, [dispatch]);
 
   const removeDish = async (id: string) => {
-    if (window.confirm('Do you really want to delete this dish?')) {
+    if (window.confirm("Do you really want to delete this dish?")) {
       await dispatch(deleteDish(id));
       await dispatch(fetchDishes());
     }
@@ -24,15 +29,21 @@ const Dishes: React.FC = () => {
 
   return (
     <>
-      <h4>Блюда</h4>
-      {fetchLoading ? <Spinner/> : dishes.map((dish) => (
-        <DishItem
-          key={dish.id}
-          dish={dish}
-          onDelete={() => removeDish(dish.id)}
-          deleteLoading={deleteLoading}
-        />
-      ))}
+      <h4>Все товары</h4>
+      <div className={styles.boxMain}>
+        {fetchLoading ? (
+          <Spinner />
+        ) : (
+          dishes.map((dish) => (
+            <DishItem
+              key={dish.id}
+              dish={dish}
+              onDelete={() => removeDish(dish.id)}
+              deleteLoading={deleteLoading}
+            />
+          ))
+        )}
+      </div>
     </>
   );
 };

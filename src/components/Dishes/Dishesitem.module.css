@@ -1,0 +1,61 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: transform 0.3s;
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.cardTitle {
+  margin: 16px 0 8px;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.cardBtnGroup {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btnAdd,
+.btnEdit,
+.btnDelete {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 10px;
+}
+
+.btnAdd {
+  color: green;
+}
+
+.btnEdit {
+  color: blue;
+}
+
+.btnDelete {
+  color: red;
+  position: relative;
+}
+
+.buttonSpinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

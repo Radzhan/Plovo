@@ -1,6 +1,6 @@
-import {ApiDish, Dish} from "../types";
+import {ApiDish, ApiOrdersList, Dish} from "../types";
 import {createSlice} from "@reduxjs/toolkit";
-import {createDish, deleteDish, fetchDish, fetchDishes, updateDish} from "./dishesThunks";
+import {createDish, deleteDish, fetchDish, fetchDishes, fetchOrders, updateDish} from "./dishesThunks";
 import {RootState} from "../app/store";
 
 interface DishesState {
@@ -11,6 +11,7 @@ interface DishesState {
   updateLoading: boolean;
   fetchOneLoading: boolean;
   oneDish: null | ApiDish;
+  orders: ApiOrdersList;
 }
 
 const initialState: DishesState = {
@@ -21,6 +22,7 @@ const initialState: DishesState = {
   updateLoading: false,
   fetchOneLoading: false,
   oneDish: null,
+  orders: {}
 };
 
 export const dishesSlice = createSlice({
@@ -34,6 +36,16 @@ export const dishesSlice = createSlice({
     builder.addCase(fetchDishes.fulfilled, (state, {payload: dishes}) => {
       state.fetchLoading = false;
       state.items = dishes;
+    });
+    builder.addCase(fetchOrders.pending, (state) => {
+      state.fetchLoading = true;
+    });
+    builder.addCase(fetchOrders.fulfilled, (state, { payload }) => {
+      state.fetchLoading = false;
+      state.orders = payload;
+    });
+    builder.addCase(fetchOrders.rejected, (state) => {
+      state.fetchLoading = false;
     });
     builder.addCase(fetchDishes.rejected, (state) => {
       state.fetchLoading = false;
@@ -85,6 +97,7 @@ export const dishesSlice = createSlice({
 export const dishesReducer = dishesSlice.reducer;
 
 export const selectDishes = (state: RootState) => state.dishes.items;
+export const selectOrders = (state: RootState) => state.dishes.orders;
 export const selectDishesFetchLoading = (state: RootState) => state.dishes.fetchLoading;
 export const selectDishDeleteLoading = (state: RootState) => state.dishes.deleteLoading;
 export const selectDishCreateLoading = (state: RootState) => state.dishes.createLoading;

@@ -1,0 +1,28 @@
+.dishesBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.dishesAmount {
+  margin-right: calc(5vw + 5vh);
+}
+
+.dishName {
+  margin-right: auto;
+}
+
+.priceBlock {
+    display: flex;
+    align-items: center;
+    width: 120px;
+    justify-content: space-between;
+}
+
+.priceBlock button {
+    border: none;
+    background-color: rgb(220, 53, 69);
+    color: white;
+    border-radius: 5px;
+}
