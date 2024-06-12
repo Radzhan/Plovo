@@ -1,9 +1,7 @@
-/* styles.css или любой другой ваш CSS файл */
 .receipt {
   width: 300px;
   font-size: 12px;
   padding: 10px;
-  border: 1px solid #000;
   margin-bottom: 20px;
 }
 

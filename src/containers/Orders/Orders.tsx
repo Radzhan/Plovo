@@ -104,6 +104,7 @@ const Orders: React.FC = () => {
               isClearable
             />
           </div>
+          
           <div>
             <label>Конечная дата:</label>
             <DatePicker

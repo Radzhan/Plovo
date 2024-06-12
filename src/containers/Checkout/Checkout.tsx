@@ -10,6 +10,7 @@ import useSyncOfflineRequests from "../../app/hooks/useSyncOfflineRequest";
 import { saveRequest } from "../../app/utils/localStorageUtil";
 import { useReactToPrint } from "react-to-print";
 import Receipt from "../../components/Receipt/Receipt";
+import './Checkout.css'
 
 const Checkout: React.FC = () => {
   useSyncOfflineRequests();
@@ -123,11 +124,13 @@ const Checkout: React.FC = () => {
             payMode={payM}
             cartDishes={cartDishes.CartDish}
           />
-          <Receipt
-            checkNumber={checkNumber}
-            payMode={payM}
-            cartDishes={cartDishes.CartDish}
-          />
+          <div className="html2pdf__page-break">
+            <Receipt
+              checkNumber={checkNumber}
+              payMode={payM}
+              cartDishes={cartDishes.CartDish}
+            />
+          </div>
         </div>
       </div>
     </>
